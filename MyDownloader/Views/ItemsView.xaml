@@ -1,0 +1,60 @@
+﻿<UserControl 
+    x:Class="MyDownloader.Views.ItemsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:MyDownloader.Views"
+    xmlns:vm="clr-namespace:MyDownloader.ViewModels"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    d:DataContext="{d:DesignInstance Type=vm:ItemsViewModel}"
+    mc:Ignorable="d" 
+    d:DesignHeight="450" d:DesignWidth="800"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ui:SimpleStackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <ui:AppBarButton Label="Add" Icon="Add" Command="{Binding AddCommand}" />
+            <ui:AppBarButton Label="Play" Icon="Play" />
+            <ui:AppBarButton Label="Pause" Icon="Pause" />
+            <ui:AppBarButton Label="Delete" Icon="Delete" />
+        </ui:SimpleStackPanel>
+
+        <DataGrid Grid.Row="1" x:Name="ItemsDataGrid" ItemsSource="{Binding Items}" AutoGenerateColumns="False" IsReadOnly="True" >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn />
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name, Mode=OneWay}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status, Mode=OneWay}" />
+                <!--<DataGridTextColumn Header="Speed" Binding="{Binding Speed}" />
+                <DataGridTextColumn Header="Process" Binding="{Binding Process}" />--> 
+                <DataGridTemplateColumn Header="Status">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ui:SimpleStackPanel>
+                                <TextBlock Text="{Binding Speed, Mode=OneWay}" />
+                                <ui:ProgressBar Value="{Binding Process, Mode=OneWay}" />
+                            </ui:SimpleStackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Size" Binding="{Binding Size, Mode=OneWay}" />
+                <DataGridTextColumn Header="Time" Binding="{Binding CreationTime, Mode=OneWay}" />
+                <DataGridTemplateColumn Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Details"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+    
+    
+</UserControl>
